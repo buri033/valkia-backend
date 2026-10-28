@@ -1,0 +1,61 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum Role {
+  admin
+  user
+}
+
+model User {
+  id           String        @id @default(uuid())
+  name         String
+  email        String        @unique
+  password     String
+  role         Role          @default(user)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  interactions Interaction[]
+
+  @@map("users")
+}
+
+model Product {
+  id           String        @id @default(uuid())
+  name         String
+  category     String        // cafes, accesorios, suscripciones
+  origin       String
+  notes        String[]
+  process      String
+  intensity    Int           @default(0)
+  price        Float
+  priceFmt     String
+  accent       String        @default("#6B4A35")
+  image        String
+  badge        String        @default("Café de Especialidad")
+  description  String
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  interactions Interaction[]
+
+  @@map("products")
+}
+
+model Interaction {
+  id         String   @id @default(uuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  productId  String
+  product    Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  preference String   // Perfil de notas elegido en el formulario
+  notes      String?  // Mensaje o comentario opcional
+  createdAt  DateTime @default(now())
+
+  @@map("interactions")
+}
