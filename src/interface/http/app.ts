@@ -30,6 +30,23 @@ app.use(
 
 app.use(express.json());
 
+// Ruta raíz informativa para navegadores y evaluadores
+app.get('/', (_req, res) => {
+  res.status(200).json({
+    message: '☕ Valkia Coffee API REST — En línea y operativa',
+    status: 'online',
+    version: '1.0.0',
+    documentation: {
+      health: '/api/health',
+      catalogo: '/api/catalogo',
+      login: '/api/auth/login',
+      interacciones: '/api/interaccion'
+    },
+    frontend: process.env.FRONTEND_URL || 'https://valkia-coffee.vercel.app',
+    timestamp: new Date().toISOString()
+  });
+});
+
 // Endpoint de verificación de estado
 app.get('/api/health', (_req, res) => {
   res.status(200).json({
