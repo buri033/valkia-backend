@@ -135,3 +135,8 @@ En el frontend se almacena en `localStorage` (o cookies accesibles) para mantene
 | `GET` | `/api/interaccion/mias` | Autenticado | Listar únicamente las interacciones del usuario en sesión |
 | `GET` | `/api/interaccion` | Solo Admin | Listar todas las interacciones del sistema |
 | `GET` | `/api/health` | Público | Health check de la API |
+
+## Evidencia del network
+A continuación muestro la evidencia de la petición HTTP protegida hacia la API con el encabezado Authorization: Bearer <token>
+<img width="1902" height="917" alt="image" src="https://github.com/user-attachments/assets/32861ea1-1312-4e2c-9d75-ec666c54069c" />
+
