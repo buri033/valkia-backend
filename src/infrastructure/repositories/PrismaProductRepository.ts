@@ -22,6 +22,20 @@ export class PrismaProductRepository implements IProductRepository {
       ];
     }
 
+    // Filtro por rango de precio (Bonus +2 pts)
+    if (params.minPrice !== undefined || params.maxPrice !== undefined) {
+      const priceFilter: Record<string, number> = {};
+      if (params.minPrice !== undefined && !isNaN(Number(params.minPrice))) {
+        priceFilter.gte = Number(params.minPrice);
+      }
+      if (params.maxPrice !== undefined && !isNaN(Number(params.maxPrice))) {
+        priceFilter.lte = Number(params.maxPrice);
+      }
+      if (Object.keys(priceFilter).length > 0) {
+        where.price = priceFilter;
+      }
+    }
+
     const [total, items] = await Promise.all([
       prisma.product.count({ where }),
       prisma.product.findMany({

@@ -21,6 +21,8 @@ export interface PaginationParams {
   limit: number;
   category?: string;
   search?: string;
+  minPrice?: number;
+  maxPrice?: number;
 }
 
 export interface PaginatedResult<T> {

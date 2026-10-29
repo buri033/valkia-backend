@@ -20,8 +20,10 @@ export class ProductController {
       const limit = req.query.limit ? parseInt(req.query.limit as string, 10) : 6;
       const category = req.query.category as string | undefined;
       const search = req.query.search as string | undefined;
+      const minPrice = req.query.minPrice ? parseFloat(req.query.minPrice as string) : undefined;
+      const maxPrice = req.query.maxPrice ? parseFloat(req.query.maxPrice as string) : undefined;
 
-      const result = await getProductsUseCase.execute({ page, limit, category, search });
+      const result = await getProductsUseCase.execute({ page, limit, category, search, minPrice, maxPrice });
       res.status(200).json(result);
     } catch (error) {
       next(error);
